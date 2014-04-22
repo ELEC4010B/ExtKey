@@ -127,6 +127,27 @@ public class MainActivity extends Activity {
 			}
 		});
 	}
+	
+	private boolean tryConnect(){
+		Intent intent = getIntent();
+		mServer = intent.getParcelableExtra(TAG_SERVER);
+		try {
+			tmp = mServer.createRfcommSocketToServiceRecord(MY_UUID);
+		} catch (IOException e) { }
+		mSocket = tmp;
+		
+		try {
+			// Connect the device through the socket. This will block until it succeeds or throws an exception
+			mSocket.connect();
+		} catch (IOException connectException) {
+			// Unable to connect; close the socket and get out
+			try {
+				mSocket.close();
+			} catch (IOException closeException) { }
+			//TODO: Pass back control to MainActivity if connection fails
+			return;
+		}
+	}
 
 	protected void onDestroy() {
 		super.onDestroy();

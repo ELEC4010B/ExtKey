@@ -24,7 +24,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity 
+        <activity android:screenOrientation="portrait"
             android:name="ece.course.extkey.ConnectActivity">
         </activity>"
     </application>
