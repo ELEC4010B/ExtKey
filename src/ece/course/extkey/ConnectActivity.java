@@ -42,6 +42,7 @@ public class ConnectActivity extends Activity{
 				mMessage = "0";
 				try {
 					mOutputStream.write(mMessage.getBytes());
+					mOutputStream.flush();
 				} catch (IOException e) {
 					//e.printStackTrace();
 				}
@@ -53,6 +54,7 @@ public class ConnectActivity extends Activity{
 				mMessage = "1";
 				try {
 					mOutputStream.write(mMessage.getBytes());
+					mOutputStream.flush();
 				} catch (IOException e) {
 					//e.printStackTrace();
 				}
@@ -64,6 +66,7 @@ public class ConnectActivity extends Activity{
 				mMessage = "2";
 				try {
 					mOutputStream.write(mMessage.getBytes());
+					mOutputStream.flush();
 				} catch (IOException e) {
 					//e.printStackTrace();
 				}
@@ -75,6 +78,7 @@ public class ConnectActivity extends Activity{
 				mMessage = "3";
 				try {
 					mOutputStream.write(mMessage.getBytes());
+					mOutputStream.flush();
 				} catch (IOException e) {
 					//e.printStackTrace();
 				}
@@ -86,6 +90,7 @@ public class ConnectActivity extends Activity{
 				mMessage = "4";
 				try {
 					mOutputStream.write(mMessage.getBytes());
+					mOutputStream.flush();
 				} catch (IOException e) {
 					//e.printStackTrace();
 				}
@@ -97,6 +102,7 @@ public class ConnectActivity extends Activity{
 				mMessage = "5";
 				try {
 					mOutputStream.write(mMessage.getBytes());
+					mOutputStream.flush();
 				} catch (IOException e) {
 					//e.printStackTrace();
 				}
@@ -108,6 +114,7 @@ public class ConnectActivity extends Activity{
 				mMessage = "6";
 				try {
 					mOutputStream.write(mMessage.getBytes());
+					mOutputStream.flush();
 				} catch (IOException e) {
 					//e.printStackTrace();
 				}
@@ -119,6 +126,7 @@ public class ConnectActivity extends Activity{
 				mMessage = "7";
 				try {
 					mOutputStream.write(mMessage.getBytes());
+					mOutputStream.flush();
 				} catch (IOException e) {
 					//e.printStackTrace();
 				}
@@ -130,6 +138,7 @@ public class ConnectActivity extends Activity{
 				mMessage = "8";
 				try {
 					mOutputStream.write(mMessage.getBytes());
+					mOutputStream.flush();
 				} catch (IOException e) {
 					//e.printStackTrace();
 				}
@@ -141,6 +150,7 @@ public class ConnectActivity extends Activity{
 				mMessage = "9";
 				try {
 					mOutputStream.write(mMessage.getBytes());
+					mOutputStream.flush();
 				} catch (IOException e) {
 					//e.printStackTrace();
 				}
