@@ -151,7 +151,8 @@ public class MainActivity extends Activity {
 
 	protected void onDestroy() {
 		super.onDestroy();
-		mAdapter.cancelDiscovery();
+		if (mAdapter != null)
+			mAdapter.cancelDiscovery();
 		if (mReceiver != null)
 			unregisterReceiver(mReceiver);
 	}
