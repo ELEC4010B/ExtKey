@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.UUID;
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -37,6 +38,7 @@ public class MainActivity extends Activity {
 	ArrayAdapter<String> nameArray;
 	List<BluetoothDevice> btList = new ArrayList<BluetoothDevice>();
 	BluetoothDevice btServer;
+	BluetoothDevice mServer;
 	BluetoothSocket mSocket;
 	BluetoothSocket tmp;
 
