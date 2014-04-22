@@ -12,6 +12,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -37,7 +38,7 @@ public class MainActivity extends Activity {
 	ArrayAdapter<String> nameArray;
 	List<BluetoothDevice> btList = new ArrayList<BluetoothDevice>();
 	BluetoothDevice btServer;
-	BluetoothSocket mSocket;
+	static BluetoothSocket mSocket;
 	BluetoothSocket tmp;
 
 	protected void onCreate(Bundle savedInstanceState) {
@@ -111,49 +112,70 @@ public class MainActivity extends Activity {
 		mListView.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView parent, View v, int position,
 					long id) {
+				stopSearch();
 				BluetoothDevice btServer = btList.get(position);
-				Intent intent = new Intent(MainActivity.this,
-						ConnectActivity.class);
-				intent.putExtra(TAG_SERVER, btServer);
-				startActivity(intent);
+				if (tryConnect(btServer)) {
+					Intent intent = new Intent(MainActivity.this,
+							ConnectActivity.class);
+					intent.putExtra(TAG_SERVER, btServer);
+					startActivity(intent);
+				} else {
+				}
 			}
 		});
 
 		btnConnect.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
 				btnConnect.setText("Connect");
-				unregisterReceiver(mReceiver);
-				mAdapter.cancelDiscovery();
+				stopSearch();
+				btList.clear();
+				nameArray.clear();
+				
+				
 			}
 		});
 	}
-	
-	private boolean tryConnect(){
-		Intent intent = getIntent();
-		mServer = intent.getParcelableExtra(TAG_SERVER);
+
+	private boolean tryConnect(BluetoothDevice server) {
 		try {
-			tmp = mServer.createRfcommSocketToServiceRecord(MY_UUID);
-		} catch (IOException e) { }
+			tmp = server.createRfcommSocketToServiceRecord(MY_UUID);
+		} catch (IOException e) {
+			Toast.makeText(MainActivity.this, "Failed to create socket",
+					Toast.LENGTH_LONG).show();
+			return false;
+		}
 		mSocket = tmp;
-		
+
 		try {
-			// Connect the device through the socket. This will block until it succeeds or throws an exception
+			// Connect the device through the socket. This will block until it
+			// succeeds or throws an exception
 			mSocket.connect();
+			return true;
 		} catch (IOException connectException) {
 			// Unable to connect; close the socket and get out
 			try {
 				mSocket.close();
-			} catch (IOException closeException) { }
-			//TODO: Pass back control to MainActivity if connection fails
-			return;
+				Toast.makeText(MainActivity.this, "Failed to connect socket",
+						Toast.LENGTH_LONG).show();
+				return false;
+			} catch (IOException closeException) {
+				return false;
+			}
 		}
 	}
-
-	protected void onDestroy() {
-		super.onDestroy();
-		if (mAdapter != null)
+	
+	public void stopSearch(){
+		if (mAdapter != null){
 			mAdapter.cancelDiscovery();
-		if (mReceiver != null)
+			mAdapter = null;
+		}
+		if (mReceiver != null){
 			unregisterReceiver(mReceiver);
+			mReceiver = null;
+		}
+	}
+	protected void onDestroy() {
+		stopSearch();
+		super.onDestroy();
 	}
 }
