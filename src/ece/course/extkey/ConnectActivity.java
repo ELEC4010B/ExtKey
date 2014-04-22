@@ -18,7 +18,7 @@ public class ConnectActivity extends Activity{
 	final UUID MY_UUID = UUID.fromString("4e1422d0-c62c-11e3-9c1a-0800200c9a66");
 	BluetoothSocket tmp;
 	final int BUTTON_NO = 10;
-	Button[] btn;
+	Button[] btn = new Button[BUTTON_NO];
 	int[] ids = {R.id.btn0, R.id.btn1, R.id.btn2, R.id.btn3, R.id.btn4, R.id.btn5, R.id.btn6, R.id.btn7, R.id.btn8, R.id.btn9};
 	OutputStream mOutputStream;
 	String mMessage;
