@@ -1,6 +1,7 @@
 package ece.course.extkey;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -30,7 +31,7 @@ public class MainActivity extends Activity {
 	BroadcastReceiver mReceiver = null;
 	ListView mListView;
 	ArrayAdapter<String> nameArray;
-	List<BluetoothDevice> btList;
+	List<BluetoothDevice> btList = new ArrayList<BluetoothDevice>();
 	BluetoothDevice btServer;
 	BluetoothSocket mSocket;
 	BluetoothSocket tmp;
