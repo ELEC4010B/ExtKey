@@ -43,13 +43,13 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-<<<<<<< HEAD
+
 
 		nameArray = new ArrayAdapter<String>(this, R.layout.main);
-=======
+
 		
 		nameArray = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
->>>>>>> ae8c3bb64e101d0de0069fad92d2c07faf756f39
+
 		mListView = (ListView) findViewById(R.id.listview);
 		mListView.setAdapter(nameArray);
 		btnConnect = (Button) findViewById(R.id.btnConnect);
@@ -74,9 +74,7 @@ public class MainActivity extends Activity {
 					.setMessage("Press back to exit.")
 					.setPositiveButton("OK",
 							new DialogInterface.OnClickListener() {
-								@Override
-								public void onClick(DialogInterface dialog,
-										int which) {
+								public void onClick(DialogInterface dialog, int which) {
 									// TODO Auto-generated method stub
 								}
 							}).create();
@@ -105,7 +103,7 @@ public class MainActivity extends Activity {
 					// ListView
 					nameArray
 							.add(device.getName() + "\n" + device.getAddress());
-					btArray.add(device);
+					btList.add(device);
 				}
 			}
 		};
@@ -118,7 +116,7 @@ public class MainActivity extends Activity {
 			public void onItemClick(AdapterView parent, View v, int position,
 					long id) {
 
-				BluetoothDevice btServer = btArray.getItem(position);
+				BluetoothDevice btServer = btList.get(position);
 				Intent intent = new Intent(MainActivity.this,
 						ConnectActivity.class);
 =======
