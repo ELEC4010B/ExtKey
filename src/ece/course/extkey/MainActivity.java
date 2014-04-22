@@ -1,6 +1,7 @@
 package ece.course.extkey;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 import android.os.Bundle;
@@ -29,7 +30,7 @@ public class MainActivity extends Activity {
 	BroadcastReceiver mReceiver = null;
 	ListView mListView;
 	ArrayAdapter<String> nameArray;
-	ArrayAdapter<BluetoothDevice> btArray;
+	List<BluetoothDevice> btList;
 	BluetoothDevice btServer;
 	BluetoothSocket mSocket;
 	BluetoothSocket tmp;
@@ -38,7 +39,7 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 		
-		nameArray = new ArrayAdapter<String>(this, R.layout.main);
+		nameArray = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
 		mListView = (ListView) findViewById(R.id.listview);
 		mListView.setAdapter(nameArray);
 		btnConnect = (Button) findViewById(R.id.btnConnect);
@@ -63,7 +64,6 @@ public class MainActivity extends Activity {
 	}
 	
 	private void Discover(){
-		mAdapter.startDiscovery();
 		mReceiver = new BroadcastReceiver() {
 		    public void onReceive(Context context, Intent intent) {
 		        String action = intent.getAction();
@@ -73,7 +73,7 @@ public class MainActivity extends Activity {
 		            BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
 		            // Add the name and address to an array adapter to show in a ListView
 		            nameArray.add(device.getName() + "\n" + device.getAddress());
-		            btArray.add(device);
+		            btList.add(device);
 		        }
 		    }
 		};
@@ -81,10 +81,12 @@ public class MainActivity extends Activity {
 		IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
 		registerReceiver(mReceiver, filter); // Don't forget to unregister during onDestroy
 		
+		mAdapter.startDiscovery();
+		
 		mListView.setOnItemClickListener(new OnItemClickListener(){
 			public void onItemClick(AdapterView parent, View v, int position, long id){
 				
-				BluetoothDevice btServer = btArray.getItem(position);
+				BluetoothDevice btServer = btList.get(position);
 				Intent intent = new Intent(MainActivity.this, ConnectActivity.class);
 				intent.putExtra(TAG_SERVER, btServer);
 				startActivity(intent);
