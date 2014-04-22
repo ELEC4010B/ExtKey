@@ -66,17 +66,8 @@ public class MainActivity extends Activity {
 				}
 			});
 		} else {
-			Dialog alertDialog = new AlertDialog.Builder(this)
-					.setTitle("No Bluetooth Adapter Found!")
-					.setMessage("Press back to exit.")
-					.setPositiveButton("OK",
-							new DialogInterface.OnClickListener() {
-								public void onClick(DialogInterface dialog,
-										int which) {
-
-								}
-							}).create();
-			alertDialog.show();
+			Toast.makeText(MainActivity.this, "No Bluetooth adapter found",
+					Toast.LENGTH_LONG).show();
 		}
 	}
 
@@ -131,8 +122,7 @@ public class MainActivity extends Activity {
 				stopSearch();
 				btList.clear();
 				nameArray.clear();
-				
-				
+
 			}
 		});
 	}
@@ -164,17 +154,18 @@ public class MainActivity extends Activity {
 			}
 		}
 	}
-	
-	public void stopSearch(){
-		if (mAdapter != null){
+
+	public void stopSearch() {
+		if (mAdapter != null) {
 			mAdapter.cancelDiscovery();
 			mAdapter = null;
 		}
-		if (mReceiver != null){
+		if (mReceiver != null) {
 			unregisterReceiver(mReceiver);
 			mReceiver = null;
 		}
 	}
+
 	protected void onDestroy() {
 		stopSearch();
 		super.onDestroy();
