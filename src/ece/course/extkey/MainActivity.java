@@ -28,7 +28,7 @@ public class MainActivity extends Activity {
 	Button btnConnect;
 	BroadcastReceiver mReceiver = null;
 	ListView mListView;
-	ArrayAdapter<String> mArrayAdapter;
+	ArrayAdapter<String> nameArray;
 	ArrayAdapter<BluetoothDevice> btArray;
 	BluetoothDevice btServer;
 	BluetoothSocket mSocket;
@@ -38,9 +38,9 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 		
-		mArrayAdapter = new ArrayAdapter<String>(this, R.layout.main);
+		nameArray = new ArrayAdapter<String>(this, R.layout.main);
 		mListView = (ListView) findViewById(R.id.listview);
-		mListView.setAdapter(mArrayAdapter);
+		mListView.setAdapter(nameArray);
 		btnConnect = (Button) findViewById(R.id.btnConnect);
 		
 		mAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -72,7 +72,7 @@ public class MainActivity extends Activity {
 		            // Get the BluetoothDevice object from the Intent
 		            BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
 		            // Add the name and address to an array adapter to show in a ListView
-		            mArrayAdapter.add(device.getName() + "\n" + device.getAddress());
+		            nameArray.add(device.getName() + "\n" + device.getAddress());
 		            btArray.add(device);
 		        }
 		    }
