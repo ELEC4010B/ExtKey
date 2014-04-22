@@ -43,6 +43,7 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
+<<<<<<< HEAD
 
 
 		nameArray = new ArrayAdapter<String>(this, R.layout.main);
@@ -50,6 +51,11 @@ public class MainActivity extends Activity {
 		
 		nameArray = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
 
+=======
+
+		nameArray = new ArrayAdapter<String>(this,
+				android.R.layout.simple_list_item_1);
+>>>>>>> 45cc9e76aacc0b84259b7d28fd3aaefb7d7e8959
 		mListView = (ListView) findViewById(R.id.listview);
 		mListView.setAdapter(nameArray);
 		btnConnect = (Button) findViewById(R.id.btnConnect);
@@ -74,8 +80,13 @@ public class MainActivity extends Activity {
 					.setMessage("Press back to exit.")
 					.setPositiveButton("OK",
 							new DialogInterface.OnClickListener() {
+<<<<<<< HEAD
 								public void onClick(DialogInterface dialog, int which) {
 									// TODO Auto-generated method stub
+=======
+								public void onClick(DialogInterface dialog,
+										int which) {
+>>>>>>> 45cc9e76aacc0b84259b7d28fd3aaefb7d7e8959
 								}
 							}).create();
 			alertDialog.show();
@@ -87,10 +98,8 @@ public class MainActivity extends Activity {
 				&& !mAdapter.isEnabled())
 			finish();
 	}
-<<<<<<< HEAD
 
 	private void Discover() {
-		mAdapter.startDiscovery();
 		mReceiver = new BroadcastReceiver() {
 			public void onReceive(Context context, Intent intent) {
 				String action = intent.getAction();
@@ -112,6 +121,8 @@ public class MainActivity extends Activity {
 		registerReceiver(mReceiver, filter); // Don't forget to unregister
 												// during onDestroy
 
+		mAdapter.startDiscovery();
+
 		mListView.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView parent, View v, int position,
 					long id) {
@@ -119,34 +130,6 @@ public class MainActivity extends Activity {
 				BluetoothDevice btServer = btList.get(position);
 				Intent intent = new Intent(MainActivity.this,
 						ConnectActivity.class);
-=======
-	
-	private void Discover(){
-		mReceiver = new BroadcastReceiver() {
-		    public void onReceive(Context context, Intent intent) {
-		        String action = intent.getAction();
-		        // When discovery finds a device
-		        if (BluetoothDevice.ACTION_FOUND.equals(action)) {
-		            // Get the BluetoothDevice object from the Intent
-		            BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-		            // Add the name and address to an array adapter to show in a ListView
-		            nameArray.add(device.getName() + "\n" + device.getAddress());
-		            btList.add(device);
-		        }
-		    }
-		};
-		// Register the BroadcastReceiver
-		IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
-		registerReceiver(mReceiver, filter); // Don't forget to unregister during onDestroy
-		
-		mAdapter.startDiscovery();
-		
-		mListView.setOnItemClickListener(new OnItemClickListener(){
-			public void onItemClick(AdapterView parent, View v, int position, long id){
-				
-				BluetoothDevice btServer = btList.get(position);
-				Intent intent = new Intent(MainActivity.this, ConnectActivity.class);
->>>>>>> ae8c3bb64e101d0de0069fad92d2c07faf756f39
 				intent.putExtra(TAG_SERVER, btServer);
 				startActivity(intent);
 			}
