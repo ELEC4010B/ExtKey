@@ -43,19 +43,8 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-<<<<<<< HEAD
-
-
-		nameArray = new ArrayAdapter<String>(this, R.layout.main);
-
-		
-		nameArray = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
-
-=======
-
 		nameArray = new ArrayAdapter<String>(this,
 				android.R.layout.simple_list_item_1);
->>>>>>> 45cc9e76aacc0b84259b7d28fd3aaefb7d7e8959
 		mListView = (ListView) findViewById(R.id.listview);
 		mListView.setAdapter(nameArray);
 		btnConnect = (Button) findViewById(R.id.btnConnect);
@@ -80,13 +69,9 @@ public class MainActivity extends Activity {
 					.setMessage("Press back to exit.")
 					.setPositiveButton("OK",
 							new DialogInterface.OnClickListener() {
-<<<<<<< HEAD
-								public void onClick(DialogInterface dialog, int which) {
-									// TODO Auto-generated method stub
-=======
 								public void onClick(DialogInterface dialog,
 										int which) {
->>>>>>> 45cc9e76aacc0b84259b7d28fd3aaefb7d7e8959
+
 								}
 							}).create();
 			alertDialog.show();
