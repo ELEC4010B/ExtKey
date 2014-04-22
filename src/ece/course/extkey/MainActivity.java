@@ -111,7 +111,6 @@ public class MainActivity extends Activity {
 		mListView.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView parent, View v, int position,
 					long id) {
-
 				BluetoothDevice btServer = btList.get(position);
 				Intent intent = new Intent(MainActivity.this,
 						ConnectActivity.class);
