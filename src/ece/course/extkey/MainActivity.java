@@ -13,9 +13,12 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.bluetooth.*;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 
@@ -26,7 +29,8 @@ public class MainActivity extends Activity {
 	int RESULT_CODE;
 	Intent ResultData;
 	BluetoothAdapter mAdapter;
-	final UUID MY_UUID = UUID.fromString("4e1422d0-c62c-11e3-9c1a-0800200c9a66");
+	final UUID MY_UUID = UUID
+			.fromString("4e1422d0-c62c-11e3-9c1a-0800200c9a66");
 	Button btnConnect;
 	BroadcastReceiver mReceiver = null;
 	ListView mListView;
@@ -39,30 +43,85 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
+<<<<<<< HEAD
+
+		nameArray = new ArrayAdapter<String>(this, R.layout.main);
+=======
 		
 		nameArray = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
+>>>>>>> ae8c3bb64e101d0de0069fad92d2c07faf756f39
 		mListView = (ListView) findViewById(R.id.listview);
 		mListView.setAdapter(nameArray);
 		btnConnect = (Button) findViewById(R.id.btnConnect);
-		
-		mAdapter = BluetoothAdapter.getDefaultAdapter();
-		if (!mAdapter.isEnabled()){
-			Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-		    startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
-		}
 
-		btnConnect.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View view) {
-				btnConnect.setText("Cancel");
-				Discover();
+		mAdapter = BluetoothAdapter.getDefaultAdapter();
+		if (mAdapter != null) {
+			if (!mAdapter.isEnabled()) {
+				Intent enableBtIntent = new Intent(
+						BluetoothAdapter.ACTION_REQUEST_ENABLE);
+				startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
 			}
-		});
+
+			btnConnect.setOnClickListener(new View.OnClickListener() {
+				public void onClick(View view) {
+					btnConnect.setText("Cancel");
+					Discover();
+				}
+			});
+		} else {
+			Dialog alertDialog = new AlertDialog.Builder(this)
+					.setTitle("No Bluetooth Adapter Found!")
+					.setMessage("Press back to exit.")
+					.setPositiveButton("OK",
+							new DialogInterface.OnClickListener() {
+								@Override
+								public void onClick(DialogInterface dialog,
+										int which) {
+									// TODO Auto-generated method stub
+								}
+							}).create();
+			alertDialog.show();
+		}
 	}
-	
-	protected void onActivityResult(int requestCode, int resultCode, Intent data){
-		if (requestCode == REQUEST_ENABLE_BT && resultCode== RESULT_CANCELED && !mAdapter.isEnabled())
+
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == REQUEST_ENABLE_BT && resultCode == RESULT_CANCELED
+				&& !mAdapter.isEnabled())
 			finish();
 	}
+<<<<<<< HEAD
+
+	private void Discover() {
+		mAdapter.startDiscovery();
+		mReceiver = new BroadcastReceiver() {
+			public void onReceive(Context context, Intent intent) {
+				String action = intent.getAction();
+				// When discovery finds a device
+				if (BluetoothDevice.ACTION_FOUND.equals(action)) {
+					// Get the BluetoothDevice object from the Intent
+					BluetoothDevice device = intent
+							.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+					// Add the name and address to an array adapter to show in a
+					// ListView
+					nameArray
+							.add(device.getName() + "\n" + device.getAddress());
+					btArray.add(device);
+				}
+			}
+		};
+		// Register the BroadcastReceiver
+		IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+		registerReceiver(mReceiver, filter); // Don't forget to unregister
+												// during onDestroy
+
+		mListView.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView parent, View v, int position,
+					long id) {
+
+				BluetoothDevice btServer = btArray.getItem(position);
+				Intent intent = new Intent(MainActivity.this,
+						ConnectActivity.class);
+=======
 	
 	private void Discover(){
 		mReceiver = new BroadcastReceiver() {
@@ -89,12 +148,12 @@ public class MainActivity extends Activity {
 				
 				BluetoothDevice btServer = btList.get(position);
 				Intent intent = new Intent(MainActivity.this, ConnectActivity.class);
+>>>>>>> ae8c3bb64e101d0de0069fad92d2c07faf756f39
 				intent.putExtra(TAG_SERVER, btServer);
 				startActivity(intent);
 			}
 		});
-		
-		
+
 		btnConnect.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
 				btnConnect.setText("Connect");
@@ -103,8 +162,8 @@ public class MainActivity extends Activity {
 			}
 		});
 	}
-	
-	protected void onDestroy(){
+
+	protected void onDestroy() {
 		super.onDestroy();
 		mAdapter.cancelDiscovery();
 		if (mReceiver != null)
