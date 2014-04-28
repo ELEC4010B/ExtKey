@@ -41,10 +41,12 @@ public class MainActivity extends Activity {
 	BluetoothDevice btServer;
 	static BluetoothSocket mSocket;
 	BluetoothSocket tmp;
-
+	boolean isDiscovering;
+	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
+		isDiscovering = false;
 		nameArray = new ArrayAdapter<String>(this,
 				android.R.layout.simple_list_item_1);
 		mListView = (ListView) findViewById(R.id.listview);
@@ -61,10 +63,20 @@ public class MainActivity extends Activity {
 
 			btnConnect.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View view) {
-					btnConnect.setText("Cancel");
-					Discover();
+					if (isDiscovering = false){
+						btnConnect.setText("Cancel");
+						Discover();
+					}
+					else if (isDiscovering = true){
+						btnConnect.setText("Connect");
+						stopSearch();
+						btList.clear();
+						nameArray.clear();
+						isDiscovering = false;
+					}
 				}
 			});
+			
 		} else {
 			Toast.makeText(MainActivity.this, "No Bluetooth adapter found",
 					Toast.LENGTH_LONG).show();
@@ -78,6 +90,7 @@ public class MainActivity extends Activity {
 	}
 
 	private void Discover() {
+		isDiscovering = true;
 		mReceiver = new BroadcastReceiver() {
 			public void onReceive(Context context, Intent intent) {
 				String action = intent.getAction();
