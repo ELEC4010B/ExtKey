@@ -60,27 +60,28 @@ public class MainActivity extends Activity {
 						BluetoothAdapter.ACTION_REQUEST_ENABLE);
 				startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
 			}
-
-			btnConnect.setOnClickListener(new View.OnClickListener() {
-				public void onClick(View view) {
-					if (isDiscovering = false){
-						btnConnect.setText("Cancel");
-						Discover();
-					}
-					else if (isDiscovering = true){
-						btnConnect.setText("Connect");
-						stopSearch();
-						btList.clear();
-						nameArray.clear();
-						isDiscovering = false;
-					}
-				}
-			});
-			
 		} else {
 			Toast.makeText(MainActivity.this, "No Bluetooth adapter found",
 					Toast.LENGTH_LONG).show();
+			finish();
 		}
+		
+		btnConnect.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View view) {
+				if (isDiscovering == false){
+					btnConnect.setText("Cancel");
+					Discover();
+				}
+				else if (isDiscovering == true){
+					btnConnect.setText("Connect");
+					stopSearch();
+					btList.clear();
+					nameArray.clear();
+					isDiscovering = false;
+				}
+			}
+		});
+		
 	}
 
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -129,7 +130,7 @@ public class MainActivity extends Activity {
 			}
 		});
 
-		btnConnect.setOnClickListener(new View.OnClickListener() {
+/*		btnConnect.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
 				btnConnect.setText("Connect");
 				stopSearch();
@@ -137,7 +138,7 @@ public class MainActivity extends Activity {
 				nameArray.clear();
 
 			}
-		});
+		}); */
 	}
 
 	private boolean tryConnect(BluetoothDevice server) {
@@ -171,7 +172,6 @@ public class MainActivity extends Activity {
 	public void stopSearch() {
 		if (mAdapter != null) {
 			mAdapter.cancelDiscovery();
-			mAdapter = null;
 		}
 		if (mReceiver != null) {
 			unregisterReceiver(mReceiver);
