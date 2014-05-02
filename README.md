@@ -1,4 +1,4 @@
-ExtKey
+Extended Keyboard (Phone Side Client)
 ======
 This is the readme file of the phone side client of Extended Keyboard.
 
