@@ -15,7 +15,7 @@ public class Trackpad extends SurfaceView{
 	final int X = 0;
 	final int Y = 1;
 	final float X_THRESH = 30;
-	final float Y_THRESH = 30;
+	final float Y_THRESH = 100;
 	OutputStream mOutputStream;
 	String mMessage;
 	float tmpX;
