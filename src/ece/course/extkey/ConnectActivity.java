@@ -57,7 +57,6 @@ public class ConnectActivity extends Activity {
 
 	public void numActivity() {
 		setContentView(R.layout.numpad);
-		for (int i=0; i<BUTTON_NO; i++){
 	try {
 			mOutputStream = mSocket.getOutputStream();
 		} catch (IOException e1) {
@@ -396,6 +395,7 @@ public class ConnectActivity extends Activity {
 				}
 			}
 		});
+		
 	}
 	public void trackActivity() {
 		setContentView(mTrackpad);
