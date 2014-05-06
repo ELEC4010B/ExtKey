@@ -27,7 +27,7 @@ public class Trackpad extends SurfaceView{
 		dY = 0;
 		data[X] = 0;
 		data[Y] = 0;
-		canvas.drawColor(Color.BLACK);
+		canvas.drawColor(Color.CYAN);
 	}
 	
 	public boolean onTouchEvent(MotionEvent motionEvent){

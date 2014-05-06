@@ -129,16 +129,6 @@ public class MainActivity extends Activity {
 				}
 			}
 		});
-
-/*		btnConnect.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View view) {
-				btnConnect.setText("Connect");
-				stopSearch();
-				btList.clear();
-				nameArray.clear();
-
-			}
-		}); */
 	}
 
 	private boolean tryConnect(BluetoothDevice server) {

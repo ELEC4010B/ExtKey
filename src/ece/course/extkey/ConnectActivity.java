@@ -35,6 +35,11 @@ public class ConnectActivity extends Activity{
 		super.onCreate(savedInstanceState);
 		mSocket = MainActivity.mSocket;
 		mTrackpad = new Trackpad(this);
+		try {
+			mOutputStream = mSocket.getOutputStream();
+		} catch (IOException e1) {
+			//e1.printStackTrace();
+		}
 		if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
 			Mode = PORTRAIT;
 			numActivity();
@@ -47,12 +52,6 @@ public class ConnectActivity extends Activity{
 	
 	public void numActivity(){
 		setContentView(R.layout.numpad);
-		try {
-			mOutputStream = mSocket.getOutputStream();
-		} catch (IOException e1) {
-			//e1.printStackTrace();
-		}
-
 		for (int i=0; i<BUTTON_NO; i++){
 			btn[i] = (Button) findViewById(ids[i]);
 		}
@@ -60,10 +59,10 @@ public class ConnectActivity extends Activity{
 		btn[0].setOnClickListener(new OnClickListener() {
 			public void onClick(View view) {
 				mMessage = "0";
+				Log.i("Sent ", mMessage);
 				try {
 					mOutputStream.write(mMessage.getBytes());
 //					mOutputStream.flush();
-					Log.i("Sent ", mMessage);
 				} catch (IOException e) {
 					//e.printStackTrace();
 				}
@@ -194,7 +193,7 @@ public class ConnectActivity extends Activity{
 	
 	public void trackActivity(){
     	setContentView(mTrackpad);
-		while (Mode == LANDSCAPE){
+   		while (Mode == LANDSCAPE){
 			int[] data = mTrackpad.getData();
 			if (data[X] == 0 && data[Y] == 0)
 				continue;
@@ -220,7 +219,7 @@ public class ConnectActivity extends Activity{
 			}
 		}
 	}
-	
+/*	
 	public void onConfigurationChanged(Configuration newConfig) {
 	    super.onConfigurationChanged(newConfig);
 	    
@@ -233,5 +232,10 @@ public class ConnectActivity extends Activity{
 	    	Log.i("Config Change:", "Orientation Changed to Portrait");
 	    	numActivity();
 	    }
+	}
+*/	
+	public void onDestroy(){
+		super.onDestroy();
+		
 	}
 }
