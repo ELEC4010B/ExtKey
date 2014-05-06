@@ -51,27 +51,27 @@
 <p>This course project is to develop a pair of applications that allow a tablet PC and a smart phone to cooperate to provide extended input functionalities.</p>
 
 <h1>
-<a name="methodology-please-enrich-the-following-key-points" class="anchor" href="#methodology-please-enrich-the-following-key-points"><span class="octicon octicon-link"></span></a>Methodology (Please enrich the following key points)</h1>
+<a name="methodology" class="anchor" href="#methodology"><span class="octicon octicon-link"></span></a>Methodology</h1>
 
 <h2>
 <a name="overview" class="anchor" href="#overview"><span class="octicon octicon-link"></span></a>Overview</h2>
 
-<p>Bluetooth connection, inter-device cooperation, etc.</p>
+<p>At the beginning, a smartphone installed with the phone side client and a tablet PC installed with the tablet side client are present. A Bluetooth connection is setup between these two devices, and then whatever is typed on the number pad or whatever cursor moving instruction is performed on the trackpad displayed on the phone side will instantly be reflected in the textbox on the tablet side, therefore allowing simultaneous input from both the tablet's own on-screen keyboard and the extended keyboard on the smartphone, eliminating the need for switching the input mode of the tablet.</p>
 
 <h2>
 <a name="phone-side" class="anchor" href="#phone-side"><span class="octicon octicon-link"></span></a>Phone Side</h2>
 
-<p>Initiating connection, sending messages, etc.</p>
+<p>The Bluetooth connection is initiated by the phone side. Click "Connect" to search for all available devices, and choose the tablet installed with the tablet side client. After that, you may switch the operation mode of the phone side client based on orientation: number pad for portrait, and trackpad for landscape (the cursor on the tablet will follow your finger movement). Each input character or cursor movement instruction is sent to the tablet through Bluetooth. The phone side client also uses wakelock to keep the screen on.</p>
 
 <h2>
 <a name="tablet-side" class="anchor" href="#tablet-side"><span class="octicon octicon-link"></span></a>Tablet Side</h2>
 
-<p>Accepting connection, receiving and interpreting messages, appending characters, moving the cursor, save text, etc.</p>
+<p>The tablet side client is idle, listening to the phone side's connection request at the beginning. After properly setting up a connection socket, the status will be changed to "connected", and you can type with both the on-screen keyboard and the extended keyboard on the phone. Any input character from the phone will be directly inserted to the current cursor position, and any trackpad cursor movement instructions can be correctly interpreted. At the end you may choose to save what you have typed to a text file to your SD card.</p>
 
 <h1>
 <a name="demonstration-video" class="anchor" href="#demonstration-video"><span class="octicon octicon-link"></span></a>Demonstration Video</h1>
 
-<p>Please insert the video frame or link here.</p>
+<p>Please insert the video frame here.</p>
 
 <h1>
 <a name="conclusion" class="anchor" href="#conclusion"><span class="octicon octicon-link"></span></a>Conclusion</h1>
