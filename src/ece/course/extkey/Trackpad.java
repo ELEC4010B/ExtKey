@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Paint.Align;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
@@ -24,6 +26,7 @@ public class Trackpad extends SurfaceView{
 	float prevY;
 	float dX;
 	float dY;
+	Paint paint;
 	
 	
 	public Trackpad(Context context) {
@@ -31,13 +34,19 @@ public class Trackpad extends SurfaceView{
 		dX = 0;
 		dY = 0;
 		mOutputStream = ConnectActivity.mOutputStream;
+		paint = new Paint();
 		setWillNotDraw(false);
 	}
 	
 	public void onDraw(Canvas canvas){
 		if (canvas == null)
 			return;
-		canvas.drawColor(Color.CYAN);
+		canvas.drawColor(Color.LTGRAY);
+		canvas.drawPaint(paint);
+		paint.setColor(Color.GRAY);
+		paint.setTextSize(48);
+		paint.setTextAlign(Align.CENTER);
+		canvas.drawText("TrackPad", canvas.getWidth()*1/2, canvas.getHeight()*1/2, paint);
 	}
 	
 	public boolean onTouchEvent(MotionEvent motionEvent){
