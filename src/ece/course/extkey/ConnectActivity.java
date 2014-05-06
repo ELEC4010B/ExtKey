@@ -75,13 +75,13 @@ public class ConnectActivity extends Activity {
 
 	public void onDestroy(){
 		super.onDestroy();
-		mMessage = "dc";
+/*		mMessage = "dc";
 		try {
 			mOutputStream.write(mMessage.getBytes());
 			// mOutputStream.flush();
 			Log.i("Sent ", mMessage);
 		} catch (IOException e) {
 			// e.printStackTrace();
-		}
+		}*/
 	}
 }

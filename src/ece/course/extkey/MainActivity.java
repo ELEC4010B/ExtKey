@@ -184,7 +184,6 @@ public class MainActivity extends Activity {
 	}	
 	protected void onDestroy() {
 		stopSearch();
-		mWakeLock.release();
 		super.onDestroy();
 	}
 }
