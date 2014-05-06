@@ -26,6 +26,13 @@ public class ConnectActivity extends Activity {
 			R.id.btnBracketRight, R.id.btnColon, R.id.btnComma, R.id.btnDollar,
 			R.id.btnDot, R.id.btnDoubleQuotation, R.id.btnExclamation,
 			R.id.btnHyphen, R.id.btnQuestion, R.id.btnSemicolon };
+	String[] messages = {"0", "1", "2", "3", 
+			"4", "5", "6", "7", "8", "9", "&", 
+			"'", "@", "(",
+			")", ":", ",", "$",
+			".", "\"", "!",
+			"-", "?", ";"};
+	
 	static OutputStream mOutputStream;
 	String mMessage;
 
@@ -43,9 +50,22 @@ public class ConnectActivity extends Activity {
 		if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
 			setContentView(R.layout.numpad);
 			for (int i = 0; i < BUTTON_NO; i++) {
-				btn[i] = (Button) findViewById(ids[i]);
+				final int tmp = i;
+				btn[tmp] = (Button) findViewById(ids[tmp]);
+				btn[tmp].setOnClickListener(new OnClickListener(){
+					public void onClick(View view){
+						mMessage = messages[tmp];
+						try {
+							mOutputStream.write(mMessage.getBytes());
+							// mOutputStream.flush();
+							Log.i("Sent ", mMessage);
+						} catch (IOException e) {
+							// e.printStackTrace();
+						}
+					}
+				});
 			}
-			
+/*			
 			btn[0].setOnClickListener(new OnClickListener() {
 				public void onClick(View view) {
 					mMessage = "0";
@@ -373,6 +393,7 @@ public class ConnectActivity extends Activity {
 					}
 				}
 			});
+*/
 			Log.i("", "Set Content View: Numpad");
 		} else {
 			Log.i("", "Set Content View: Trackpad");

@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.UUID;
 
 import android.os.Bundle;
+import android.os.PowerManager;
+import android.os.PowerManager.WakeLock;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -21,6 +23,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 
 public class MainActivity extends Activity {
+	private PowerManager mPowerManager;
+	private WakeLock mWakeLock;
 	final int DEVICE_FOUND = 101;
 	final int REQUEST_ENABLE_BT = 100;
 	final String TAG_SERVER = "tagServer";
@@ -41,6 +45,10 @@ public class MainActivity extends Activity {
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		mPowerManager = (PowerManager) getSystemService(POWER_SERVICE);
+		mWakeLock = mPowerManager.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK, getClass().getName());
+		
 		setContentView(R.layout.main);
 		isDiscovering = false;
 		nameArray = new ArrayAdapter<String>(this,
@@ -165,6 +173,15 @@ public class MainActivity extends Activity {
 		}
 	}
 
+	public synchronized void onResume() {
+		super.onResume();
+		mWakeLock.acquire();
+	}
+
+	public synchronized void onPause() {
+		super.onPause();
+		mWakeLock.release();
+	}	
 	protected void onDestroy() {
 		stopSearch();
 		super.onDestroy();

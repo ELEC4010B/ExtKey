@@ -14,9 +14,8 @@ import android.view.SurfaceView;
 public class Trackpad extends SurfaceView{
 	final int X = 0;
 	final int Y = 1;
-	final float X_THRESH = 50;
-	final float Y_THRESH = 50;
-	int[] mov;
+	final float X_THRESH = 30;
+	final float Y_THRESH = 30;
 	OutputStream mOutputStream;
 	String mMessage;
 	float tmpX;
@@ -29,7 +28,6 @@ public class Trackpad extends SurfaceView{
 	
 	public Trackpad(Context context) {
 		super(context);
-		mov = new int[2];
 		dX = 0;
 		dY = 0;
 		mOutputStream = ConnectActivity.mOutputStream;
@@ -48,7 +46,7 @@ public class Trackpad extends SurfaceView{
 		case MotionEvent.ACTION_DOWN : 
 			prevX = motionEvent.getX();
 			prevY = motionEvent.getY();
-			Log.i("Touch screen", "Pressed @X: " + prevX + ", Y: " + prevY);
+//			Log.i("Touch screen", "Pressed @X: " + prevX + ", Y: " + prevY);
 			break;
 			
 		case MotionEvent.ACTION_MOVE :
@@ -59,7 +57,7 @@ public class Trackpad extends SurfaceView{
 			prevX = tmpX;
 			prevY = tmpY;
 			action = motionEvent.getAction();
-			Log.i("Touch screen", "Moved @X: " + tmpX + ", Y: " + tmpY);
+//			Log.i("Touch screen", "Moved @X: " + tmpX + ", Y: " + tmpY);
 			
 			if (dX >= X_THRESH){
 				dX = 0;
@@ -109,7 +107,7 @@ public class Trackpad extends SurfaceView{
 			break;
 			
 		case MotionEvent.ACTION_UP : 
-			Log.i("Touch screen", "Released @dX: " + dX + ", dY: " + dY);
+//			Log.i("Touch screen", "Released @dX: " + dX + ", dY: " + dY);
 			break;
 		}
 		return true;
