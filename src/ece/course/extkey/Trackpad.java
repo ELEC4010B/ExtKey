@@ -14,17 +14,24 @@ import android.view.SurfaceView;
 public class Trackpad extends SurfaceView{
 	final int X = 0;
 	final int Y = 1;
-	final float X_THRESH = 1;
-	final float Y_THRESH = 1;
-	float dX = 0;
-	float dY = 0;
-	int[] data;
+	final float X_THRESH = 50;
+	final float Y_THRESH = 50;
+	int[] mov;
 	OutputStream mOutputStream;
 	String mMessage;
+	float tmpX;
+	float tmpY;
+	float prevX;
+	float prevY;
+	float dX;
+	float dY;
+	
 	
 	public Trackpad(Context context) {
 		super(context);
-		data = new int[2];
+		mov = new int[2];
+		dX = 0;
+		dY = 0;
 		mOutputStream = ConnectActivity.mOutputStream;
 		setWillNotDraw(false);
 	}
@@ -32,62 +39,78 @@ public class Trackpad extends SurfaceView{
 	public void onDraw(Canvas canvas){
 		if (canvas == null)
 			return;
-		dX = 0;
-		dY = 0;
-		data[X] = 0;
-		data[Y] = 0;
 		canvas.drawColor(Color.CYAN);
-		invalidate();
 	}
 	
 	public boolean onTouchEvent(MotionEvent motionEvent){
-		float tmpX = motionEvent.getX();
-		float tmpY = motionEvent.getY();
-		dX = dX + tmpX;
-		dY = dY + tmpY;
 		int action = motionEvent.getAction();
-		if (action == motionEvent.ACTION_MOVE){
+		switch (action){
+		case MotionEvent.ACTION_DOWN : 
+			prevX = motionEvent.getX();
+			prevY = motionEvent.getY();
+			Log.i("Touch screen", "Pressed @X: " + prevX + ", Y: " + prevY);
+			break;
+			
+		case MotionEvent.ACTION_MOVE :
+			tmpX = motionEvent.getX();
+			tmpY = motionEvent.getY();
+			dX = dX + (tmpX - prevX);
+			dY = dY + (tmpY - prevY);
+			prevX = tmpX;
+			prevY = tmpY;
+			action = motionEvent.getAction();
+			Log.i("Touch screen", "Moved @X: " + tmpX + ", Y: " + tmpY);
+			
 			if (dX >= X_THRESH){
-				data[X] = 1;
 				dX = 0;
+				mMessage = "R";
+				try {
+					mOutputStream.write(mMessage.getBytes());
+					Log.i("Sent ", mMessage);
+				} catch (IOException e) {
+					Log.i("Failed sending ", mMessage);
+					// e.printStackTrace();
+				}
 			}
 			else if (dX <= -X_THRESH){
-				data[X] = -1;
 				dX = 0;
+				mMessage = "L";
+				try {
+					mOutputStream.write(mMessage.getBytes());
+					Log.i("Sent ", mMessage);
+				} catch (IOException e) {
+					Log.i("Failed sending ", mMessage);
+					// e.printStackTrace();
+				}
 			}
 			if (dY >= Y_THRESH){
-				data[Y] = 1;
 				dY = 0;
+				mMessage = "D";
+				try {
+					mOutputStream.write(mMessage.getBytes());
+					Log.i("Sent ", mMessage);
+				} catch (IOException e) {
+					Log.i("Failed sending ", mMessage);
+					// e.printStackTrace();
+				}
 			}
-			else if (dY <= -Y_THRESH){
-				data[X] = -1;
+			if (dY <= -Y_THRESH){
 				dY = 0;
+				mMessage = "U";
+				try {
+					mOutputStream.write(mMessage.getBytes());
+					Log.i("Sent ", mMessage);
+				} catch (IOException e) {
+					Log.i("Failed sending ", mMessage);
+					// e.printStackTrace();
+				}
 			}
 			
-			if (data[X] == 0 && data[Y] == 0)
-				return true;
-			if (data[X] == 1) {
-				mMessage = "L";
-				data[X] = 0;
-			} else if (data[X] == -1) {
-				mMessage = "R";
-				data[X] = 0;
-			}
-			if (data[Y] == 1) {
-				mMessage = "U";
-				data[Y]= 0;
-			} else if (data[Y] == -1) {
-				mMessage = "D";
-				data[Y] = 0;
-			}
-			try {
-				mOutputStream.write(mMessage.getBytes());
-				// mOutputStream.flush();
-				Log.i("Sent ", mMessage);
-			} catch (IOException e) {
-				Log.i("Failed sending ", mMessage);
-				// e.printStackTrace();
-			}
+			break;
+			
+		case MotionEvent.ACTION_UP : 
+			Log.i("Touch screen", "Released @dX: " + dX + ", dY: " + dY);
+			break;
 		}
 		return true;
 	}
