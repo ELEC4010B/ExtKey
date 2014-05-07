@@ -17,7 +17,7 @@ public class Trackpad2 extends SurfaceView{
 	final int X = 0;
 	final int Y = 1;
 	final float X_THRESH = 30;
-	final float Y_THRESH = 80;
+	final float Y_THRESH = 50;
 	OutputStream mOutputStream;
 	String mMessage;
 	float tmpX;
@@ -43,7 +43,7 @@ public class Trackpad2 extends SurfaceView{
 			return;
 		canvas.drawColor(Color.LTGRAY);
 		canvas.drawPaint(paint);
-		paint.setColor(Color.GRAY);
+		paint.setColor(Color.BLACK);
 		paint.setTextSize(48);
 		paint.setTextAlign(Align.CENTER);
 		canvas.drawText("TrackPad", canvas.getWidth()*1/2, canvas.getHeight()*1/2, paint);

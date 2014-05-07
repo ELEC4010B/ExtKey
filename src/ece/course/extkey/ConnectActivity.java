@@ -6,6 +6,8 @@ import java.util.UUID;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.PowerManager;
+import android.os.PowerManager.WakeLock;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -14,6 +16,8 @@ import android.bluetooth.*;
 import android.content.res.Configuration;
 
 public class ConnectActivity extends Activity {
+	private PowerManager mPowerManager;
+	private WakeLock mWakeLock;
 	BluetoothSocket mSocket;
 	Trackpad mTrackpad;
 	final UUID MY_UUID = UUID
@@ -38,6 +42,8 @@ public class ConnectActivity extends Activity {
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		mPowerManager = (PowerManager) getSystemService(POWER_SERVICE);
+		mWakeLock = mPowerManager.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK, getClass().getName());
 		mSocket = MainActivity.mSocket;
 		btn = new Button[BUTTON_NO];
 		mTrackpad = new Trackpad(this);
@@ -73,6 +79,16 @@ public class ConnectActivity extends Activity {
 		}
 	}
 
+	public synchronized void onResume() {
+		super.onResume();
+		mWakeLock.acquire();
+	}
+
+	public synchronized void onPause() {
+		super.onPause();
+		mWakeLock.release();
+	}
+	
 	public void onDestroy(){
 		super.onDestroy();
 /*		mMessage = "dc";
