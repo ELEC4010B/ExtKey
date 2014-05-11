@@ -8,6 +8,7 @@ import java.util.UUID;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -27,6 +28,7 @@ public class MainActivity extends Activity {
 	private WakeLock mWakeLock;
 	final int DEVICE_FOUND = 101;
 	final int REQUEST_ENABLE_BT = 100;
+	final int RETURN = 102;
 	final String TAG_SERVER = "tagServer";
 	int RESULT_CODE;
 	Intent ResultData;
@@ -85,13 +87,20 @@ public class MainActivity extends Activity {
 				}
 			}
 		});
-		
 	}
 
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == REQUEST_ENABLE_BT && resultCode == RESULT_CANCELED
 				&& !mAdapter.isEnabled())
 			finish();
+		if (requestCode == RETURN){
+			try {
+				mSocket.getOutputStream().write('Q');
+				Log.i("Sent", "DC Request");
+			} catch (IOException e) {
+				// e.printStackTrace();
+			}
+		}
 	}
 
 	private void Discover() {
@@ -128,7 +137,7 @@ public class MainActivity extends Activity {
 					Intent intent = new Intent(MainActivity.this,
 							ConnectActivity.class);
 					intent.putExtra(TAG_SERVER, btServer);
-					startActivity(intent);
+					startActivityForResult(intent, RETURN);
 				} else {
 				}
 			}

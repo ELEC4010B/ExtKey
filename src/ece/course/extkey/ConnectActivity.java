@@ -18,26 +18,25 @@ import android.content.res.Configuration;
 public class ConnectActivity extends Activity {
 	private PowerManager mPowerManager;
 	private WakeLock mWakeLock;
-	BluetoothSocket mSocket;
-	Trackpad mTrackpad;
+	static OutputStream mOutputStream;
 	final UUID MY_UUID = UUID
 			.fromString("4e1422d0-c62c-11e3-9c1a-0800200c9a66");
 	final int BUTTON_NO = 24;
-	Button[] btn;
-	int[] ids = { R.id.btn0, R.id.btn1, R.id.btn2, R.id.btn3, R.id.btn4,
+	final int[] ids = { R.id.btn0, R.id.btn1, R.id.btn2, R.id.btn3, R.id.btn4,
 			R.id.btn5, R.id.btn6, R.id.btn7, R.id.btn8, R.id.btn9, R.id.btnAnd,
 			R.id.btnApostrophe, R.id.btnAt, R.id.btnBracketLeft,
 			R.id.btnBracketRight, R.id.btnColon, R.id.btnComma, R.id.btnDollar,
 			R.id.btnDot, R.id.btnDoubleQuotation, R.id.btnExclamation,
 			R.id.btnHyphen, R.id.btnQuestion, R.id.btnSemicolon };
-	String[] messages = {"0", "1", "2", "3", 
+	final String[] messages = {"0", "1", "2", "3", 
 			"4", "5", "6", "7", "8", "9", "&", 
 			"'", "@", "(",
 			")", ":", ",", "$",
 			".", "\"", "!",
 			"-", "?", ";"};
-	
-	static OutputStream mOutputStream;
+	Button[] btn;
+	BluetoothSocket mSocket;
+	Trackpad2 mTrackpad;  /**********REMEBER TO CHANGE TRACKPAD VERSION**************/
 	String mMessage;
 
 	public void onCreate(Bundle savedInstanceState) {
@@ -46,7 +45,7 @@ public class ConnectActivity extends Activity {
 		mWakeLock = mPowerManager.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK, getClass().getName());
 		mSocket = MainActivity.mSocket;
 		btn = new Button[BUTTON_NO];
-		mTrackpad = new Trackpad(this);
+		mTrackpad = new Trackpad2(this);  /***********REMEBER TO CHANGE TRACKPAD VERSION*************/
 		try {
 			mOutputStream = mSocket.getOutputStream();
 		} catch (IOException e1) {
@@ -91,13 +90,5 @@ public class ConnectActivity extends Activity {
 	
 	public void onDestroy(){
 		super.onDestroy();
-/*		mMessage = "dc";
-		try {
-			mOutputStream.write(mMessage.getBytes());
-			// mOutputStream.flush();
-			Log.i("Sent ", mMessage);
-		} catch (IOException e) {
-			// e.printStackTrace();
-		}*/
 	}
 }
