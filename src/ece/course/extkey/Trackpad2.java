@@ -22,6 +22,8 @@ public class Trackpad2 extends SurfaceView{
 	final String RIGHT = "R";
 	final String S_LEFT = "N";
 	final String S_RIGHT = "M";
+	final String S_END = "P";
+	final String END = "O";
 	final int X = 0;
 	final int Y = 1;
 	final float X_THRESH = 30;
@@ -135,6 +137,14 @@ public class Trackpad2 extends SurfaceView{
 				break;
 				
 			case MotionEvent.ACTION_UP : 
+				mMessage = END;
+				try {
+					mOutputStream.write(mMessage.getBytes());
+					Log.i("Sent ", mMessage);
+				} catch (IOException e) {
+					Log.i("Failed sending ", mMessage);
+					// e.printStackTrace();
+				}
 				break;
 			}
 			return true;
@@ -169,7 +179,7 @@ public class Trackpad2 extends SurfaceView{
 				action = motionEvent.getAction();
 	//			Log.i("Touch screen", "Moved @X: " + tmpX + ", Y: " + tmpY);
 				
-				if (dX[0] >= X_THRESH && dX[1] >= X_THRESH){
+				if (dX[0] >= X_THRESH || dX[1] >= X_THRESH){
 					dX[0] = 0;
 					dX[1] = 0;
 					mMessage = S_RIGHT;
@@ -181,7 +191,7 @@ public class Trackpad2 extends SurfaceView{
 						// e.printStackTrace();
 					}
 				}
-				else if (dX[0] <= -X_THRESH && dX[1] <= -X_THRESH){
+				else if (dX[0] <= -X_THRESH || dX[1] <= -X_THRESH){
 					dX[0] = 0;
 					dX[1] = 0;
 					mMessage = S_LEFT;
@@ -195,13 +205,17 @@ public class Trackpad2 extends SurfaceView{
 				}
 				break;
 				
-			case MotionEvent.ACTION_UP :
-				isEnabled = false;
-				delay.postDelayed(dummy, DELAY);
-				break;
-				
+			case MotionEvent.ACTION_UP:
 			case MotionEvent.ACTION_POINTER_1_UP:
 				isEnabled = false;
+				mMessage = S_END;
+				try {
+					mOutputStream.write(mMessage.getBytes());
+					Log.i("Sent ", mMessage);
+				} catch (IOException e) {
+					Log.i("Failed sending ", mMessage);
+					// e.printStackTrace();
+				}
 				delay.postDelayed(dummy, DELAY);
 				break;
 			}
