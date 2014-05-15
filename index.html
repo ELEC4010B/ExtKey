@@ -17,7 +17,7 @@
     <div class="wrapper">
       <header>
         <h1 class="header">Extended Keyboard</h1>
-        <p class="header">The following links are for the PHONE SIDE only:</p>
+        <p class="header">The following links are the source code of the PHONE SIDE client only:</p>
 
         <ul>
           <li class="download"><a class="buttons" href="https://github.com/ELEC4010B/ExtKey/zipball/master">Download ZIP</a></li>
@@ -61,12 +61,12 @@
 <h2>
 <a name="phone-side" class="anchor" href="#phone-side"><span class="octicon octicon-link"></span></a>Phone Side</h2>
 
-<p>The Bluetooth connection is initiated by the phone side. Click "Connect" to search for all available devices, and choose the tablet installed with the tablet side client. After that, you may switch the operation mode of the phone side client based on orientation: number pad for portrait, and trackpad for landscape (the cursor on the tablet will follow your finger movement). Each input character or cursor movement instruction is sent to the tablet through Bluetooth. The phone side client also uses wakelock to keep the screen on.</p>
+<p>The Bluetooth connection is initiated by the phone side. Click "Connect" to search for all available devices, and choose the tablet installed with the tablet side client. After that, you may switch the operation mode of the phone side client based on orientation: number pad for portrait, and trackpad for landscape. In number pad mode, each input character is sent to the tablet through Bluetooth. In trackpad mode, use single finger movement to navigate the cursor on the tablet side, and two fingers movement to select texts. The touch event is then converted to an instruction in String format and sent to the tablet side. The phone side client also uses wakelock to keep the screen on.</p>
 
 <h2>
 <a name="tablet-side" class="anchor" href="#tablet-side"><span class="octicon octicon-link"></span></a>Tablet Side</h2>
 
-<p>The tablet side client is idle, listening to the phone side's connection request at the beginning. After properly setting up a connection socket, the status will be changed to "connected", and you can type with both the on-screen keyboard and the extended keyboard on the phone. Any input character from the phone will be directly inserted to the current cursor position, and any trackpad cursor movement instructions can be correctly interpreted. At the end you may choose to save what you have typed to a text file to your SD card.</p>
+<p>The tablet side client is idle, listening to the phone side's connection request at the beginning. After properly setting up a connection socket, the status will be changed to "connected", and you can type with both the on-screen keyboard and the extended keyboard on the phone. Any input character from the phone will be directly inserted to the current cursor position, and any trackpad instruction is interpreted instantly. Upon text selection, you can press the menu button to call out the cut-copy-paste menu. At the end you may choose to save what you have typed to a text file on your SD card.</p>
 
 <h1>
 <a name="demonstration-video" class="anchor" href="#demonstration-video"><span class="octicon octicon-link"></span></a>Demonstration Video</h1>
@@ -79,21 +79,34 @@
 <p>This project has created a pair of collaborating Android applications that can significantly improve input efficiency on a tablet PC. These two apps use Bluetooth Serial Profile to communicate with each other, and can cooperate to enable you to input characters and numbers/symbols without having to switch keyboard mode. We believe that you will enjoy using our apps!</p>
 
 <h1>
-<a name="note" class="anchor" href="#note"><span class="octicon octicon-link"></span></a>Note</h1>
+<a name="downloads" class="anchor" href="#downloads"><span class="octicon octicon-link"></span></a>Downloads</h1>
 
-<p>The links on the left of this page will bring you to the Git project of the <strong>phone side</strong> client, where you may view and download the APK file and project source codes. To access the Git project of the <strong>tablet side</strong> client, please refer to the following:</p>
+<h2>
+<a name="phone-side-client" class="anchor" href="#phone-side-client"><span class="octicon octicon-link"></span></a>Phone Side Client</h2>
+
+<p>Insert direct link here</p>
+
+<h2>
+<a name="tablet-side-client" class="anchor" href="#tablet-side-client"><span class="octicon octicon-link"></span></a>Tablet Side Client</h2>
+
+<p>Insert direct link here</p>
+
+<h2>
+<a name="source-codes" class="anchor" href="#source-codes"><span class="octicon octicon-link"></span></a>Source Codes</h2>
 
 <h3>
-<a name="download-zip" class="anchor" href="#download-zip"><span class="octicon octicon-link"></span></a><a href="https://github.com/ELEC4010B/ExtKeyTab/zipball/master">Download ZIP</a>
-</h3>
+<a name="phone-side-1" class="anchor" href="#phone-side-1"><span class="octicon octicon-link"></span></a>Phone Side</h3>
+
+<p><a href="https://github.com/ELEC4010B/ExtKey/zipball/master">Download ZIP</a>
+<a href="https://github.com/ELEC4010B/ExtKey/tarball/master">Download TAR</a>
+<a href="https://github.com/ELEC4010B/ExtKey">View On GitHub</a></p>
 
 <h3>
-<a name="download-tar" class="anchor" href="#download-tar"><span class="octicon octicon-link"></span></a><a href="https://github.com/ELEC4010B/ExtKeyTab/tarball/master">Download TAR</a>
-</h3>
+<a name="tablet-side-1" class="anchor" href="#tablet-side-1"><span class="octicon octicon-link"></span></a>Tablet Side</h3>
 
-<h3>
-<a name="view-on-github" class="anchor" href="#view-on-github"><span class="octicon octicon-link"></span></a><a href="https://github.com/ELEC4010B/ExtKeyTab">View On GitHub</a>
-</h3>
+<p><a href="https://github.com/ELEC4010B/ExtKeyTab/zipball/master">Download ZIP</a>
+<a href="https://github.com/ELEC4010B/ExtKeyTab/tarball/master">Download TAR</a>
+<a href="https://github.com/ELEC4010B/ExtKeyTab">View On GitHub</a></p>
       </section>
       <footer>
         <p><small>Hosted on <a href="http://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
