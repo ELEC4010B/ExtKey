@@ -26,8 +26,8 @@ public class Trackpad2 extends SurfaceView{
 	final String END = "O";
 	final int X = 0;
 	final int Y = 1;
-	final float X_THRESH = 30;
-	final float Y_THRESH = 50;
+	final float X_THRESH = 25;
+	final float Y_THRESH = 45;
 	final int DELAY = 250;
 	OutputStream mOutputStream;
 	boolean isEnabled;
@@ -55,18 +55,18 @@ public class Trackpad2 extends SurfaceView{
 			dX[i] = 0;
 			dY[i] = 0;
 		}
-		mOutputStream = ConnectActivity.mOutputStream;
 		setWillNotDraw(false);
 	}
 	
 	public void onDraw(Canvas canvas){
 		if (canvas == null)
 			return;
+		mOutputStream = ConnectActivity.mOutputStream;
 		canvas.drawColor(Color.LTGRAY);
 		paint = new Paint();
 		canvas.drawPaint(paint);
 		paint.setColor(Color.BLACK);
-		paint.setTextSize(48);
+		paint.setTextSize(12);
 		paint.setTextAlign(Align.CENTER);
 		canvas.drawText("TrackPad", canvas.getWidth()*1/2, canvas.getHeight()*1/2, paint);
 	}
@@ -91,6 +91,7 @@ public class Trackpad2 extends SurfaceView{
 				
 				if (dX[0] >= X_THRESH){
 					dX[0] = 0;
+					dY[0] = 0;
 					mMessage = RIGHT;
 					try {
 						mOutputStream.write(mMessage.getBytes());
@@ -102,6 +103,7 @@ public class Trackpad2 extends SurfaceView{
 				}
 				else if (dX[0] <= -X_THRESH){
 					dX[0] = 0;
+					dY[0] = 0;
 					mMessage = LEFT;
 					try {
 						mOutputStream.write(mMessage.getBytes());
@@ -111,8 +113,9 @@ public class Trackpad2 extends SurfaceView{
 						// e.printStackTrace();
 					}
 				}
-				if (dY[0] >= Y_THRESH){
+				else if (dY[0] >= Y_THRESH){
 					dY[0] = 0;
+					dX[0] = 0;
 					mMessage = DOWN;
 					try {
 						mOutputStream.write(mMessage.getBytes());
@@ -122,8 +125,9 @@ public class Trackpad2 extends SurfaceView{
 						// e.printStackTrace();
 					}
 				}
-				if (dY[0] <= -Y_THRESH){
+				else if (dY[0] <= -Y_THRESH){
 					dY[0] = 0;
+					dX[0] = 0;
 					mMessage = UP;
 					try {
 						mOutputStream.write(mMessage.getBytes());
@@ -138,6 +142,8 @@ public class Trackpad2 extends SurfaceView{
 				
 			case MotionEvent.ACTION_UP : 
 				mMessage = END;
+				dX[0] = 0;
+				dY[0] = 0;
 				try {
 					mOutputStream.write(mMessage.getBytes());
 					Log.i("Sent ", mMessage);
@@ -207,6 +213,8 @@ public class Trackpad2 extends SurfaceView{
 				
 			case MotionEvent.ACTION_UP:
 			case MotionEvent.ACTION_POINTER_1_UP:
+				dX[0] = 0;
+				dX[1] = 0;
 				isEnabled = false;
 				mMessage = S_END;
 				try {
