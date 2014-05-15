@@ -64,11 +64,10 @@ public class Trackpad2 extends SurfaceView{
 		mOutputStream = ConnectActivity.mOutputStream;
 		canvas.drawColor(Color.LTGRAY);
 		paint = new Paint();
-		canvas.drawPaint(paint);
-		paint.setColor(Color.BLACK);
-		paint.setTextSize(12);
+		paint.setColor(Color.DKGRAY);
+		paint.setTextSize(24);
 		paint.setTextAlign(Align.CENTER);
-		canvas.drawText("TrackPad", canvas.getWidth()*1/2, canvas.getHeight()*1/2, paint);
+		canvas.drawText("1 Finger: Move Cursor          2 Fingers: Highlight", canvas.getWidth()*1/2, canvas.getHeight() * 5/6, paint);
 	}
 	
 	public boolean onTouchEvent(MotionEvent motionEvent){
