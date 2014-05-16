@@ -11,6 +11,7 @@ import android.os.PowerManager.WakeLock;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.bluetooth.*;
 import android.content.res.Configuration;
@@ -43,6 +44,7 @@ public class ConnectActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		mPowerManager = (PowerManager) getSystemService(POWER_SERVICE);
 		mWakeLock = mPowerManager.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK, getClass().getName());
+		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		mSocket = MainActivity.mSocket;
 		btn = new Button[BUTTON_NO];
 		mTrackpad = new Trackpad2(this);  /***********REMEBER TO CHANGE TRACKPAD VERSION*************/
